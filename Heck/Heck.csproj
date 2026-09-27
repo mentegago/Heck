@@ -5,15 +5,16 @@
     <OutputType>Library</OutputType>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Configurations>Debug-1.29.1;Release-1.29.1;Debug-1.34.2;Release-1.34.2;Debug-1.37.1;Release-1.37.1;Debug-1.40.8;Release-1.40.8;Debug-1.42.1;Release-1.42.1</Configurations>
+    <Configurations>Debug-1.29.1;Release-1.29.1;Debug-1.34.2;Release-1.34.2;Debug-1.37.1;Release-1.37.1;Debug-1.40.8;Release-1.40.8;Debug-1.42.1;Release-1.42.1;Debug-1.44.1;Release-1.44.1;Debug-1.44.2;Release-1.44.2</Configurations>
   </PropertyGroup>
 
   <PropertyGroup>
     <PluginId>Heck</PluginId>
     <PluginName>Heck</PluginName>
     <Author>Aeroluna</Author>
-    <Version>1.8.3</Version>
+    <Version>1.8.4</Version>
     <Description>Library for Aeroluna's mods.</Description>
+    <CustomJSONDataPath Condition="'$(CustomJSONDataPath)' == ''">$(BeatSaberDir)\Plugins\CustomJSONData.dll</CustomJSONDataPath>
   </PropertyGroup>
   <ItemGroup>
     <DependsOn Include="BeatSaberMarkupLanguage" Version="^1.5.9"/>
@@ -31,7 +32,7 @@
     <Reference Include="BeatmapCore" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatmapCore.dll"/>
     <Reference Include="BeatSaber.GameSettings" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.GameSettings.dll" Publicize="true"/>
     <Reference Include="BeatSaber.Multiplayer.Core" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.Multiplayer.Core.dll"/>
-    <Reference Include="BeatSaber.PerformancePresets" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.PerformancePresets.dll"/>
+    <Reference Include="BeatSaber.PerformancePresets" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.PerformancePresets.dll" Condition="Exists('$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.PerformancePresets.dll')"/>
     <Reference Include="BeatSaber.Settings" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.Settings.dll"/>
     <Reference Include="BeatSaber.ViewSystem" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.ViewSystem.dll" Publicize="true"/>
     <Reference Include="BeatSaberMarkupLanguage" HintPath="$(BeatSaberDir)\Plugins\BSML.dll"/>
@@ -40,11 +41,11 @@
     <Reference Include="BGLib.JsonExtension" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.JsonExtension.dll"/>
     <Reference Include="BGLib.SaveDataCore" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.SaveDataCore.dll"/>
     <Reference Include="BGLib.UnityExtension" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.UnityExtension.dll"/>
-    <Reference Include="BGNet" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGNet.dll"/>
+    <Reference Include="BGNet" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGNet.dll" Condition="Exists('$(BeatSaberDir)\Beat Saber_Data\Managed\BGNet.dll')"/>
     <Reference Include="BGNetCore" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGNetCore.dll"/>
     <Reference Include="DataModels" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\DataModels.dll" Publicize="true"/>
     <Reference Include="Colors" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\Colors.dll"/>
-    <Reference Include="CustomJSONData" HintPath="$(BeatSaberDir)\Plugins\CustomJSONData.dll"/>
+    <Reference Include="CustomJSONData" HintPath="$(CustomJSONDataPath)"/>
     <Reference Include="GameplayCore" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\GameplayCore.dll"/>
     <Reference Include="HMLib" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\HMLib.dll"/>
     <Reference Include="HMUI" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\HMUI.dll" Publicize="true"/>
@@ -66,12 +67,13 @@
     <EmbeddedResource Include="SettingsSetter\SettableSettingsContent.bsml"/>
     <EmbeddedResource Include="SettingsSetter\SettingsSetter.bsml"/>
     <EmbeddedResource Include="SettingsSetter\SettingsSetterSettableSettings.json"/>
+    <EmbeddedResource Include="manifest.1.44.1.json" LogicalName="Heck.manifest.json" Condition="'$(StandaloneBuild)' == 'true' and ('$(Configuration)' == 'Debug-1.44.1' or '$(Configuration)' == 'Release-1.44.1')"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BeatSaberModdingTools.Tasks.Luna" Version="2.1.0"/>
+    <PackageReference Include="BeatSaberModdingTools.Tasks.Luna" Version="2.1.0" Condition="'$(StandaloneBuild)' != 'true'"/>
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.*"/>
-    <PackageReference Include="LunaBSMod.Tasks" Version="1.1.0"/>
+    <PackageReference Include="LunaBSMod.Tasks" Version="1.1.0" Condition="'$(StandaloneBuild)' != 'true'"/>
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354"/>
   </ItemGroup>
 </Project>

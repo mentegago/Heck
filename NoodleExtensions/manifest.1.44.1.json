@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+  "id": "NoodleExtensions",
+  "name": "NoodleExtensions",
+  "author": "Aeroluna",
+  "version": "1.7.22",
+  "gameVersion": "1.44.1",
+  "description": "Custom note and obstacle movement for Beat Saber maps.",
+  "dependsOn": {
+    "Heck": "^1.7.0",
+    "BSIPA": "^4.2.2",
+    "CustomJSONData": "^2.6.0",
+    "SiraUtil": "^3.0.5"
+  }
+}

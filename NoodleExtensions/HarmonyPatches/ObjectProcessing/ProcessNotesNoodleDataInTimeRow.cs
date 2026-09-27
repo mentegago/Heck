@@ -38,6 +38,8 @@ internal static class ProcessNotesNoodleDataInTimeRow
 
     private static readonly FieldInfo _sliderField = AccessTools.Field(_sliderTailDataType, "slider");
 
+    private static readonly MethodInfo _lineIndexGetter = AccessTools.PropertyGetter(typeof(NoteData), nameof(NoteData.lineIndex));
+
     private static IReadOnlyList<T> AccessContainerItems<T>(object timeSliceContainer)
     {
         // ReSharper disable once InvertIf
@@ -174,7 +176,7 @@ internal static class ProcessNotesNoodleDataInTimeRow
                     }
 
                     noteData.SetCutDirectionAngleOffset(num);
-#if LATEST
+#if !PRE_V1_44_1
                     sliderData.SetHeadCutDirectionAngleOffset(noteData.GetCutDirectionAngleOffsetForSlider());
 #else
                     sliderData.SetCutDirectionAngleOffset(num, num);
@@ -194,7 +196,7 @@ internal static class ProcessNotesNoodleDataInTimeRow
         CustomSliderData[] sliderTailDatasInTimeRow = (from object sliderTailData in _getSliderTailDatas(containerItems)
             select _sliderField.GetValue(sliderTailData)).OfType<CustomSliderData>().ToArray();
 
-#if LATEST
+#if !PRE_V1_44_1
         foreach (CustomSliderData sliderData in slidersInTimeRow)
         {
             IEnumerable<float?>? headPosition =
@@ -263,7 +265,7 @@ internal static class ProcessNotesNoodleDataInTimeRow
                 sliderTailData.customData[INTERNAL_TAILSTARTNOTELINELAYER] =
                     noteData.customData[INTERNAL_STARTNOTELINELAYER];
                 sliderTailData.SetTailBeforeJumpLineLayer(noteData.beforeJumpNoteLineLayer);
-#if LATEST
+#if !PRE_V1_44_1
                 sliderTailData.SetTailCutDirectionAngleOffset(noteData.GetCutDirectionAngleOffsetForSlider());
 #endif
 #if !PRE_V1_37_1
@@ -354,8 +356,8 @@ internal static class ProcessNotesNoodleDataInTimeRow
             .MatchForward(
                 true,
                 new CodeMatch(OpCodes.Ldloc_S),
-                new CodeMatch(OpCodes.Callvirt),
-                new CodeMatch(OpCodes.Ldelem_Ref))
+                new CodeMatch(OpCodes.Callvirt, _lineIndexGetter))
+            .Advance(1)
             .Insert(
                 new CodeInstruction(OpCodes.Ldc_I4_0),
                 new CodeInstruction(OpCodes.Ldc_I4_3),

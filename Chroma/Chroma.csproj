@@ -5,7 +5,7 @@
     <OutputType>Library</OutputType>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Configurations>Debug-1.29.1;Release-1.29.1;Debug-1.34.2;Release-1.34.2;Debug-1.37.1;Release-1.37.1;Debug-1.40.8;Release-1.40.8;Debug-1.42.1;Release-1.42.1</Configurations>
+    <Configurations>Debug-1.29.1;Release-1.29.1;Debug-1.34.2;Release-1.34.2;Debug-1.37.1;Release-1.37.1;Debug-1.40.8;Release-1.40.8;Debug-1.42.1;Release-1.42.1;Debug-1.44.1;Release-1.44.1;Debug-1.44.2;Release-1.44.2</Configurations>
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
@@ -13,8 +13,9 @@
     <PluginId>Chroma</PluginId>
     <PluginName>Chroma</PluginName>
     <Author>Aeroluna</Author>
-    <Version>2.9.22</Version>
+    <Version>2.9.23</Version>
     <Description>Chroma™ boasts the most power in color customization you've ever seen, allowing mappers to customize blocks, lights, sabers, and barriers into not just one but multiple colors!</Description>
+    <CustomJSONDataPath Condition="'$(CustomJSONDataPath)' == ''">$(BeatSaberDir)\Plugins\CustomJSONData.dll</CustomJSONDataPath>
   </PropertyGroup>
   <ItemGroup>
     <DependsOn Include="Heck" Version="^1.7.0"/>
@@ -31,12 +32,13 @@
   <ItemGroup>
     <Reference Include="0Harmony" HintPath="$(BeatSaberDir)\Libs\0Harmony.dll"/>
     <Reference Include="BeatmapCore" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatmapCore.dll"/>
+    <Reference Include="BeatSaber.Haptics" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.Haptics.dll" Condition="Exists('$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.Haptics.dll')"/>
     <Reference Include="BGLib.AppFlow" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.AppFlow.dll" Publicize="true"/>
     <Reference Include="BGLib.DotnetExtension" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.DotnetExtension.dll"/>
     <Reference Include="BGLib.UnityExtension" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.UnityExtension.dll"/>
     <Reference Include="BSML" HintPath="$(BeatSaberDir)\Plugins\BSML.dll"/>
     <Reference Include="Colors" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\Colors.dll" Publicize="true"/>
-    <Reference Include="CustomJSONData" HintPath="$(BeatSaberDir)\Plugins\CustomJSONData.dll"/>
+    <Reference Include="CustomJSONData" HintPath="$(CustomJSONDataPath)"/>
     <Reference Include="DataModels" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\DataModels.dll" Publicize="true"/>
     <Reference Include="GameplayCore" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\GameplayCore.dll"/>
     <Reference Include="HMLib" HintPath="$(BeatSaberDir)\Beat Saber_Data\Managed\HMLib.dll"/>
@@ -65,12 +67,13 @@
   <ItemGroup>
     <EmbeddedResource Include="LightIDTables\*.json"/>
     <EmbeddedResource Include="Settings\modifiers.bsml"/>
+    <EmbeddedResource Include="manifest.1.44.1.json" LogicalName="Chroma.manifest.json" Condition="'$(StandaloneBuild)' == 'true' and ('$(Configuration)' == 'Debug-1.44.1' or '$(Configuration)' == 'Release-1.44.1')"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BeatSaberModdingTools.Tasks.Luna" Version="2.1.0"/>
+    <PackageReference Include="BeatSaberModdingTools.Tasks.Luna" Version="2.1.0" Condition="'$(StandaloneBuild)' != 'true'"/>
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.*"/>
-    <PackageReference Include="LunaBSMod.Tasks" Version="1.1.0"/>
+    <PackageReference Include="LunaBSMod.Tasks" Version="1.1.0" Condition="'$(StandaloneBuild)' != 'true'"/>
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354"/>
   </ItemGroup>
 </Project>

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+  "id": "Chroma",
+  "name": "Chroma",
+  "author": "Aeroluna",
+  "version": "2.9.23",
+  "gameVersion": "1.44.1",
+  "description": "Color customization for Beat Saber maps.",
+  "dependsOn": {
+    "Heck": "^1.7.0",
+    "BeatSaberMarkupLanguage": "^1.6.3",
+    "BSIPA": "^4.2.2",
+    "CustomJSONData": "^2.6.3",
+    "SiraUtil": "^3.0.5"
+  }
+}
